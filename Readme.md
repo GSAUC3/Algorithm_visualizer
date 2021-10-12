@@ -1,6 +1,6 @@
 # Sorting Algorithm Visualizer
 
-    A gui application to visualize various sorting algorithms using pure python.
+A gui application to visualize various sorting algorithms using pure python.
     
 ### Language : Python 3
 
