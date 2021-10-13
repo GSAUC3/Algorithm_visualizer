@@ -60,7 +60,12 @@ class window:
           self.display(self.N,self.data,self.colours)
         
      
-     def display(self,N,a,rong):
+     def display(self,N: int,a: list,rong: list):
+          '''
+          N = number of rectangles
+          a = array of heights of rectangles
+          rong = array of colours of each and every rectangle'''
+
           self.canvas.delete('all')
           width=(2*(780/N))//3
           gap=(780/N)//3
@@ -202,14 +207,14 @@ class window:
           self.display(self.N,self.data,self.colours)
           # print(self.data)
 
-     def start(self):
+     def start(self,T=0.2):
           if self.st['bubble'] is True:
                for i in range(self.N-1):
                     for j in range(self.N-1-i):
                          if self.data[j]>self.data[j+1]:
                               self.data[j],self.data[j+1]=self.data[j+1],self.data[j]
                               self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a>self.N-1-i else 'blue' for a in range(self.N)])
-                              time.sleep(0.02)
+                              time.sleep(T)
                self.display(self.N,self.data,['green' for _ in range(self.N)])
 
           elif self.st['insertion'] is True:
@@ -220,7 +225,7 @@ class window:
                          self.data[i+1]=self.data[i]
                          i-=1
                          self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a<=j else'blue' for a in range(self.N)])
-                         time.sleep(0.02)
+                         time.sleep(T)
                     self.data[i+1]=key
                self.display(self.N,self.data,['green' for _ in range(self.N)])
 
@@ -231,7 +236,7 @@ class window:
                     for j in range(i+1,len(self.data)):
                          if self.data[min_index]>self.data[j]:
                               self.display(self.N,self.data,['purple' if a==j else 'green' if a<=i else 'blue' for a in range(self.N)])
-                              time.sleep(0.2)
+                              time.sleep(T)
                               min_index=j
                     if min_index!=i:
                          self.data[i], self.data[min_index]=self.data[min_index],self.data[i]
@@ -239,6 +244,9 @@ class window:
                
 
           elif self.st['merge'] is True:
+               self.data=self.mergesort(self.data)
+               self.display(self.N,self.data,['green' for _ in range(self.N)])
+
                pass
 
           elif self.st['quick'] is True:
@@ -252,7 +260,51 @@ class window:
                pass
 
           # print(self.data)
+     
+ #----------------------------------------------------------------------    
+     def mergeelements(self,l,r):
 
+          i,j=0,0
+          b=[]
+          while i<len(l) and j<len(r):
+               if l[i]<r[j]:
+                    b.append(l[i])
+                    i+=1
+                    # self.display(self.N,b+self.data[len(b):],['green' if x<len(b) else 'purple' for x in range(self.N) ])
+                    # time.sleep(0.2)     
+               else:
+                    b.append(r[j])
+                    j+=1
+                    # self.display(self.N,b+self.data[len(b):],['green' if x<len(b) else 'purple' for x in range(self.N) ])
+                    # time.sleep(0.2)     
+                  
+          while i<len(l):
+               b.append(l[i])
+               i+=1
+               # self.display(self.N,b+self.data[len(b):],['green' if x<len(b) else 'purple' for x in range(self.N) ])
+               # time.sleep(0.2)     
+               
+          while j<len(r):
+               b.append(r[j])
+               j+=1
+               # self.display(self.N,b+self.data[len(b):],['green' if x<len(b) else 'purple' for x in range(self.N) ])
+               # time.sleep(0.2)     
+               
+          return b    
+     
+     
+     def mergesort(self,a):
+          size=len(a)
+          if size<2:
+               return a
+          mid=size//2
+          l=a[:mid]
+          r=a[mid:]
+          l=self.mergesort(l)
+          r=self.mergesort(r)
+          return self.mergeelements(l,r)
+     
+#---------------------------------------------------------------------------
 
 win = Style(theme='cyborg').master
 obj = window(win, 'Sorting Algorithm Visualizer')
