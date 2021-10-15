@@ -8,7 +8,7 @@ import time
 class window:
 
      st = {'bubble': False, 'insertion': False, 'selection': False,
-          'merge': False, 'bucket': False, 'quick': False}  # to select the sorts
+          'merge': False, 'quick': False}  # to select the sorts
 
      def __init__(self, root, title) -> None:
           self.root = root
@@ -29,31 +29,35 @@ class window:
           self.ms = ttk.Button(self.root, text='Merge Sort', style='info.TButton', padding=5, width=15,
                               command=self.merge)
           self.ms.grid(column=3, row=1, padx=5, pady=5)
-          self.buckets = ttk.Button(self.root, text='Bucket Sort', style='info.TButton', padding=5, width=15,
-                                   command=self.bucket)
-          self.buckets.grid(column=4, row=1, padx=5, pady=5)
+                  
           self.qs = ttk.Button(self.root, text='Quick Sort', style='info.TButton', padding=5, width=15,
                               command=self.quick)
-          self.qs.grid(column=5, row=1, padx=5, pady=5)
+          self.qs.grid(column=4, row=1, padx=5, pady=5)
           
           self.start = ttk.Button(self.root, text='Start', padding=5, width=15,
                               command=self.start)
           self.start.grid(column=5, row=2, padx=5, pady=5)
 
+          self.timespan=ttk.Scale(self.root,from_=0.02,to=0.9,value=0.1,style='success.Horizontal.TScale')
+          self.timespan.grid(row=2,column=1)
+          self.arraysize=ttk.Scale(self.root,from_=5,to=100)
           
-
-          self.shuf = ttk.Button(self.root, text='Shuffle', style='info.TButton', padding=5, width=15,
+          
+          self.shuf = ttk.Button(self.root, text='Shuffle', style='info.Outline.TButton', padding=5, width=15,
                                    command=self.shuffle)
-          self.shuf.grid(column=0, row=2, padx=5, pady=5)
+          self.shuf.grid(column=5, row=1, padx=5, pady=5)
 
           #    Canvas
-          self.canvas=Canvas(self.root, width=800-5, height=400,
-               bg='white')
+          self.canvas=Canvas(self.root, width=800-5, height=400,highlightbackground="dodgerblue",highlightthickness=2,
+               bg='black')
           self.canvas.grid(row=4, padx=5, pady=10, columnspan=6)
+
+
+
 
           # some constants
           self.N=30
-          self.colours=['blue' for i in range(self.N)]
+          self.colours=['dodgerblue' for i in range(self.N)]
           N=self.N
           self.data=np.linspace(5,400,N,dtype=np.uint16)
           np.random.shuffle(self.data)
@@ -85,8 +89,7 @@ class window:
                     if i != 'bubble':
                          self.st[i]=False
 
-               self.qs.config(style='info.TButton')
-               self.buckets.config(style='info.TButton')
+               self.qs.config(style='info.TButton')               
                self.ms.config(style='info.TButton')
                self.ss.config(style='info.TButton')
                self.Is.config(style='info.TButton')
@@ -106,8 +109,7 @@ class window:
                     if i != 'merge':
                          self.st[i]=False
 
-               self.qs.config(style='info.TButton')
-               self.buckets.config(style='info.TButton')
+               self.qs.config(style='info.TButton')               
                self.bs.config(style='info.TButton')
                self.ss.config(style='info.TButton')
                self.Is.config(style='info.TButton')
@@ -127,8 +129,7 @@ class window:
                     if i != 'quick':
                          self.st[i]=False
 
-               self.ms.config(style='info.TButton')
-               self.buckets.config(style='info.TButton')
+               self.ms.config(style='info.TButton')               
                self.bs.config(style='info.TButton')
                self.ss.config(style='info.TButton')
                self.Is.config(style='info.TButton')
@@ -148,8 +149,7 @@ class window:
                     if i != 'selection':
                          self.st[i]=False
 
-               self.qs.config(style='info.TButton')
-               self.buckets.config(style='info.TButton')
+               self.qs.config(style='info.TButton')               
                self.bs.config(style='info.TButton')
                self.ms.config(style='info.TButton')
                self.Is.config(style='info.TButton')
@@ -169,8 +169,7 @@ class window:
                for i in self.st:
                     if i != 'insertion':
                          self.st[i]=False
-               self.qs.config(style='info.TButton')
-               self.buckets.config(style='info.TButton')
+               self.qs.config(style='info.TButton')               
                self.bs.config(style='info.TButton')
                self.ss.config(style='info.TButton')
                self.ms.config(style='info.TButton')
@@ -180,27 +179,7 @@ class window:
                self.Is.config(style='info.TButton')
                # print(self.st)
 
-     '''  bucket sort'''
-     def bucket(self):
-          if self.st['bucket'] is False:
-               self.st['bucket'] = True
-               self.buckets.config(style='success.TButton')
-
-               for i in self.st:
-                    if i != 'bucket':
-                         self.st[i]=False
-
-               self.qs.config(style='info.TButton')
-               self.Is.config(style='info.TButton')
-               self.bs.config(style='info.TButton')
-               self.ss.config(style='info.TButton')
-               self.ms.config(style='info.TButton')
-               # print(self.st)
-          else:
-               self.st['bucket'] = False
-               self.buckets.config(style='info.TButton')
-               # print(self.st)
-
+  
      def shuffle(self):
           self.canvas.delete('all')
           np.random.shuffle(self.data)
@@ -213,7 +192,7 @@ class window:
                     for j in range(self.N-1-i):
                          if self.data[j]>self.data[j+1]:
                               self.data[j],self.data[j+1]=self.data[j+1],self.data[j]
-                              self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a>self.N-1-i else 'blue' for a in range(self.N)])
+                              self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a>self.N-1-i else 'dodgerblue' for a in range(self.N)])
                               time.sleep(T)
                self.display(self.N,self.data,['green' for _ in range(self.N)])
 
@@ -224,7 +203,7 @@ class window:
                     while i>=0 and self.data[i]>key:
                          self.data[i+1]=self.data[i]
                          i-=1
-                         self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a<=j else'blue' for a in range(self.N)])
+                         self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a<=j else'dodgerblue' for a in range(self.N)])
                          time.sleep(T)
                     self.data[i+1]=key
                self.display(self.N,self.data,['green' for _ in range(self.N)])
@@ -235,7 +214,7 @@ class window:
                     # loop to find the minimum element and its index
                     for j in range(i+1,len(self.data)):
                          if self.data[min_index]>self.data[j]:
-                              self.display(self.N,self.data,['purple' if a==j else 'green' if a<=i else 'blue' for a in range(self.N)])
+                              self.display(self.N,self.data,['purple' if a==j else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
                               time.sleep(T)
                               min_index=j
                     if min_index!=i:
@@ -251,9 +230,6 @@ class window:
                self.quicksort(self.data,0,self.N-1)
                self.display(self.N,self.data,['green' for _ in range(self.N)])
 
-          elif self.st['bucket'] is True:
-               pass
-
           else:
                '''show messege box'''
                pass
@@ -268,7 +244,7 @@ class window:
                self.mergesort(a,mid+1,last)
 
 
-               self.display(self.N,self.data,['blue' for _ in range(self.N)])
+               self.display(self.N,self.data,['dodgerblue' for _ in range(self.N)])
                
                rj=mid+1
                if a[mid]<=a[mid+1]:
@@ -282,7 +258,7 @@ class window:
                          i=rj
                          while i!=front:
                               a[i]=a[i-1]
-                              self.display(self.N,self.data,['purple' if x==i else 'blue' for x in range(self.N)])
+                              self.display(self.N,self.data,['purple' if x==i else 'dodgerblue' for x in range(self.N)])
                               time.sleep(0.1)
                               i-=1
                          a[front]=temp
@@ -291,7 +267,7 @@ class window:
                          mid+=1
                          rj+=1
           
-               self.display(self.N,self.data,['blue' for _ in range(self.N)])
+               self.display(self.N,self.data,['dodgerblue' for _ in range(self.N)])
                time.sleep(0.2)
      
      #--------------------------------------------------quick sort---------------
@@ -323,11 +299,11 @@ class window:
           
                self.quicksort(a,i,x-1)
                self.quicksort(a,x+1,j)
-     #--------------------------------------------------quick sort---------------
+     #--------------------------------------------------
      
 
 
-win = Style(theme='cyborg').master
+win = Style(theme='darkly').master
 obj = window(win, 'Sorting Algorithm Visualizer')
 
 win.mainloop()
