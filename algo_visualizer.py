@@ -37,16 +37,12 @@ class window:
           self.start.grid(column=5, row=2, padx=5, pady=5)
 
           ttk.Label(self.root, text='Speed & Array Size:').grid(row=2,column=0)
-          self.timespan=ttk.Scale(self.root,from_=1,to=1000,value=0.2,style='success.Horizontal.TScale',length=250,
-                    command=lambda x:self.slide_function())
-          self.timespan.grid(row=2,column=1,columnspan=2)
-          self.arraysize=ttk.Scale(self.root,from_=6,to=120,length=250,style='success.Horizontal.TScale',value=10,
+          self.arraysize=ttk.Scale(self.root,from_=6,to=120,length=380,style='success.Horizontal.TScale',value=10,
                command=lambda x:self.slide_function())
-          self.arraysize.grid(row=2,column=3,columnspan=2)
+          self.arraysize.grid(row=2,column=1,columnspan=3)
           
-          self.shuf = ttk.Button(self.root, text='Shuffle', style='info.Outline.TButton', padding=5, width=15,
-                                   command=self.shuffle)
-          self.shuf.grid(column=5, row=1, padx=5, pady=5)
+          ttk.Button(self.root, text='Shuffle', style='info.Outline.TButton', padding=5, width=15,
+                                   command=self.shuffle).grid(column=5, row=1, padx=5, pady=5)
 
           #    Canvas
           self.canvas=Canvas(self.root, width=800-5, height=400,highlightbackground="dodgerblue",highlightthickness=2,
@@ -83,7 +79,7 @@ class window:
      def slide_function(self):
           self.N=int(self.arraysize.get())
           self.data=np.linspace(5,400,self.N,dtype=np.uint16)
-          self.speed=1/self.timespan.get()
+          self.speed=5/self.arraysize.get()
           self.colours=['dodgerblue' for _ in range(self.N)]
           self.shuffle()
           
@@ -229,12 +225,16 @@ class window:
                     min_index=i
                     # loop to find the minimum element and its index
                     for j in range(i+1,len(self.data)):
-                         self.display(self.N,self.data,['purple' if a==min_index else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
+                         self.display(self.N,self.data,['yellow' if a==min_index or a==i else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
                          time.sleep(self.speed)
                          if self.data[min_index]>self.data[j]:
+                              self.display(self.N,self.data,['red' if a==min_index or a==i else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
+                              time.sleep(self.speed)
                               min_index=j
                     if min_index!=i:
                          self.data[i], self.data[min_index]=self.data[min_index],self.data[i]
+                         self.display(self.N,self.data,['lime' if a==min_index or a==i else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
+                         time.sleep(self.speed)
                self.display(self.N,self.data,['lime' for _ in range(self.N)])
                
 
