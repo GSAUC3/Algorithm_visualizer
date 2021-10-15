@@ -244,13 +244,12 @@ class window:
                
 
           elif self.st['merge'] is True:
-               self.data=self.mergesort(self.data)
+               self.mergesort(self.data,0,self.N-1)
                self.display(self.N,self.data,['green' for _ in range(self.N)])
 
-               pass
-
           elif self.st['quick'] is True:
-               pass
+               self.quicksort(self.data,0,self.N-1)
+               self.display(self.N,self.data,['green' for _ in range(self.N)])
 
           elif self.st['bucket'] is True:
                pass
@@ -259,52 +258,74 @@ class window:
                '''show messege box'''
                pass
 
-          # print(self.data)
-     
- #----------------------------------------------------------------------    
-     def mergeelements(self,l,r):
+     # -----------merge sort-------------------------------------
 
-          i,j=0,0
-          b=[]
-          while i<len(l) and j<len(r):
-               if l[i]<r[j]:
-                    b.append(l[i])
+     def mergesort(self,a,front,last):
+          if front<last:
+               mid= (front+last)//2
+
+               self.mergesort(a,front,mid)
+               self.mergesort(a,mid+1,last)
+
+
+               self.display(self.N,self.data,['blue' for _ in range(self.N)])
+               
+               rj=mid+1
+               if a[mid]<=a[mid+1]:
+                    return 
+               
+               while front<=mid and rj<=last:
+                    if a[front]<=a[rj]:
+                         front+=1
+                    else:
+                         temp=a[rj]
+                         i=rj
+                         while i!=front:
+                              a[i]=a[i-1]
+                              self.display(self.N,self.data,['purple' if x==i else 'blue' for x in range(self.N)])
+                              time.sleep(0.1)
+                              i-=1
+                         a[front]=temp
+
+                         front+=1
+                         mid+=1
+                         rj+=1
+          
+               self.display(self.N,self.data,['blue' for _ in range(self.N)])
+               time.sleep(0.2)
+     
+     #--------------------------------------------------quick sort---------------
+
+     def partition(self,a,i,j):
+          '''
+          a -> is  the array
+          i -> index from front
+          j -> index from back'''
+
+          l=i # left index
+
+          pivot=a[i]
+
+          while i<j:
+               while  i<len(a) and a[i]<= pivot :
                     i+=1
-                    # self.display(self.N,b+self.data[len(b):],['green' if x<len(b) else 'purple' for x in range(self.N) ])
-                    # time.sleep(0.2)     
-               else:
-                    b.append(r[j])
-                    j+=1
-                    # self.display(self.N,b+self.data[len(b):],['green' if x<len(b) else 'purple' for x in range(self.N) ])
-                    # time.sleep(0.2)     
-                  
-          while i<len(l):
-               b.append(l[i])
-               i+=1
-               # self.display(self.N,b+self.data[len(b):],['green' if x<len(b) else 'purple' for x in range(self.N) ])
-               # time.sleep(0.2)     
+               while a[j]>pivot:
+                    j-=1
+               if i<j:
+                    a[i],a[j]=a[j],a[i]
                
-          while j<len(r):
-               b.append(r[j])
-               j+=1
-               # self.display(self.N,b+self.data[len(b):],['green' if x<len(b) else 'purple' for x in range(self.N) ])
-               # time.sleep(0.2)     
-               
-          return b    
+          a[j],a[l]=a[l],a[j]
+          return j
+
+     def quicksort(self,a,i,j):
+          if i<j:
+               x=self.partition(a,i,j)
+          
+               self.quicksort(a,i,x-1)
+               self.quicksort(a,x+1,j)
+     #--------------------------------------------------quick sort---------------
      
-     
-     def mergesort(self,a):
-          size=len(a)
-          if size<2:
-               return a
-          mid=size//2
-          l=a[:mid]
-          r=a[mid:]
-          l=self.mergesort(l)
-          r=self.mergesort(r)
-          return self.mergeelements(l,r)
-     
-#---------------------------------------------------------------------------
+
 
 win = Style(theme='cyborg').master
 obj = window(win, 'Sorting Algorithm Visualizer')
