@@ -37,10 +37,10 @@ class window:
           self.start.grid(column=5, row=2, padx=5, pady=5)
 
           ttk.Label(self.root, text='Speed & Array Size:').grid(row=2,column=0)
-          self.timespan=ttk.Scale(self.root,from_=1,to=1000,value=0.1,style='success.Horizontal.TScale',length=250,
+          self.timespan=ttk.Scale(self.root,from_=1,to=1000,value=0.2,style='success.Horizontal.TScale',length=250,
                     command=lambda x:self.slide_function())
           self.timespan.grid(row=2,column=1,columnspan=2)
-          self.arraysize=ttk.Scale(self.root,from_=6,to=120,length=250,style='success.Horizontal.TScale',value=30,
+          self.arraysize=ttk.Scale(self.root,from_=6,to=120,length=250,style='success.Horizontal.TScale',value=10,
                command=lambda x:self.slide_function())
           self.arraysize.grid(row=2,column=3,columnspan=2)
           
@@ -57,9 +57,9 @@ class window:
 
           # some constants
           self.speed=0.2
-          self.N=30
+          self.N=10
           self.colours=['dodgerblue' for i in range(self.N)]
-          N=30
+          N=self.N
           self.data=np.linspace(5,400,N,dtype=np.uint16)
           np.random.shuffle(self.data)
           self.display(N,self.data,self.colours)
@@ -200,23 +200,29 @@ class window:
           if self.st['bubble'] is True:
                for i in range(self.N-1):
                     for j in range(self.N-1-i):
+                         self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a>self.N-1-i else 'dodgerblue' for a in range(self.N)])
+                         time.sleep(self.speed)
                          if self.data[j]>self.data[j+1]:
-                              self.data[j],self.data[j+1]=self.data[j+1],self.data[j]
-                              self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a>self.N-1-i else 'dodgerblue' for a in range(self.N)])
+                              self.display(self.N,self.data,['red' if a==j or a==j+1 else 'green' if a>self.N-1-i else 'dodgerblue' for a in range(self.N)])
                               time.sleep(self.speed)
-               self.display(self.N,self.data,['green' for _ in range(self.N)])
+                              self.data[j],self.data[j+1]=self.data[j+1],self.data[j]
+                              self.display(self.N,self.data,['lime' if a==j or a==j+1 else 'green' if a>self.N-1-i else 'dodgerblue' for a in range(self.N)])
+                              time.sleep(self.speed)
+               self.display(self.N,self.data,['lime' for _ in range(self.N)])
 
           elif self.st['insertion'] is True:
                for j in range(1,len(self.data)):
                     key=self.data[j]
                     i=j-1
+                    self.display(self.N,self.data,['purple' if a==i or a==i+1 else 'green' if a<=j else'dodgerblue' for a in range(self.N)])
+                    time.sleep(self.speed)
                     while i>=0 and self.data[i]>key:
                          self.data[i+1]=self.data[i]
-                         i-=1
-                         self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a<=j else'dodgerblue' for a in range(self.N)])
+                         self.display(self.N,self.data,['yellow' if a==i else 'green' if a<=j else'dodgerblue' for a in range(self.N)])
                          time.sleep(self.speed)
+                         i-=1
                     self.data[i+1]=key
-               self.display(self.N,self.data,['green' for _ in range(self.N)])
+               self.display(self.N,self.data,['lime' for _ in range(self.N)])
 
           elif self.st['selection'] is True:
                for i in range(len(self.data)-1):
@@ -229,16 +235,16 @@ class window:
                               min_index=j
                     if min_index!=i:
                          self.data[i], self.data[min_index]=self.data[min_index],self.data[i]
-               self.display(self.N,self.data,['green' for _ in range(self.N)])
+               self.display(self.N,self.data,['lime' for _ in range(self.N)])
                
 
           elif self.st['merge'] is True:
                self.mergesort(self.data,0,self.N-1)
-               self.display(self.N,self.data,['green' for _ in range(self.N)])
+               self.display(self.N,self.data,['lime' for _ in range(self.N)])
 
           elif self.st['quick'] is True:
                self.quicksort(self.data,0,self.N-1)
-               self.display(self.N,self.data,['green' for _ in range(self.N)])
+               self.display(self.N,self.data,['lime' for _ in range(self.N)])
 
           else:
                #show messege box
