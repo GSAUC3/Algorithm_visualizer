@@ -304,16 +304,21 @@ class window:
           l=i # left index
 
           pivot=a[i]
+          piv_index=i
 
           while i<j:
                while  i<len(a) and a[i]<= pivot:
                     i+=1
+                    self.display(self.N,self.data,['purple' if x==piv_index else 'yellow' if x==i else "dodgerblue" for x in range(self.N)])
+                    time.sleep(self.speed)
                while a[j]>pivot:
                     j-=1
                if i<j:
+                    self.display(self.N,self.data,['red' if x==i or x==j else "dodgerblue" for x in range(self.N)])
+                    time.sleep(self.speed)
                     a[i],a[j]=a[j],a[i]
-               self.display(self.N,self.data,['yellow' if x==i or x==j else "dodgerblue" for x in range(self.N)])
-               time.sleep(self.speed)
+                    self.display(self.N,self.data,['lime' if x==i or x==j else "dodgerblue" for x in range(self.N)])
+                    time.sleep(self.speed)
           a[j],a[l]=a[l],a[j]
           return j
 
