@@ -16,5 +16,6 @@ A gui application to visualize various sorting algorithms using pure python.
 
 ### Screenshot
 
-![Screenshot 2021-10-13 013913](https://user-images.githubusercontent.com/55054089/137022389-83294494-e1a6-405a-9261-8e9a70cf12b5.png)
 
+
+![Screenshot 2021-10-16 021635](https://user-images.githubusercontent.com/55054089/137551474-512ffc14-90bc-4fdf-ab8c-835d930e3b64.png)
