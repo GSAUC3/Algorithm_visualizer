@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk,messagebox
 from ttkbootstrap import *
 import numpy as np
 import time
@@ -28,20 +28,21 @@ class window:
           self.ss.grid(column=2, row=1, padx=5, pady=5)
           self.ms = ttk.Button(self.root, text='Merge Sort', style='info.TButton', padding=5, width=15,
                               command=self.merge)
-          self.ms.grid(column=3, row=1, padx=5, pady=5)
-                  
+          self.ms.grid(column=3, row=1, padx=5, pady=5)         
           self.qs = ttk.Button(self.root, text='Quick Sort', style='info.TButton', padding=5, width=15,
                               command=self.quick)
-          self.qs.grid(column=4, row=1, padx=5, pady=5)
-          
+          self.qs.grid(column=4, row=1, padx=5, pady=5)          
           self.start = ttk.Button(self.root, text='Start', padding=5, width=15,
                               command=self.start)
           self.start.grid(column=5, row=2, padx=5, pady=5)
 
-          self.timespan=ttk.Scale(self.root,from_=0.02,to=0.9,value=0.1,style='success.Horizontal.TScale')
-          self.timespan.grid(row=2,column=1)
-          self.arraysize=ttk.Scale(self.root,from_=5,to=100)
-          
+          ttk.Label(self.root, text='Speed & Array Size:').grid(row=2,column=0)
+          self.timespan=ttk.Scale(self.root,from_=1,to=1000,value=0.1,style='success.Horizontal.TScale',length=250,
+                    command=lambda x:self.slide_function())
+          self.timespan.grid(row=2,column=1,columnspan=2)
+          self.arraysize=ttk.Scale(self.root,from_=6,to=120,length=250,style='success.Horizontal.TScale',value=30,
+               command=lambda x:self.slide_function())
+          self.arraysize.grid(row=2,column=3,columnspan=2)
           
           self.shuf = ttk.Button(self.root, text='Shuffle', style='info.Outline.TButton', padding=5, width=15,
                                    command=self.shuffle)
@@ -54,14 +55,14 @@ class window:
 
 
 
-
           # some constants
+          self.speed=0.2
           self.N=30
           self.colours=['dodgerblue' for i in range(self.N)]
-          N=self.N
+          N=30
           self.data=np.linspace(5,400,N,dtype=np.uint16)
           np.random.shuffle(self.data)
-          self.display(self.N,self.data,self.colours)
+          self.display(N,self.data,self.colours)
         
      
      def display(self,N: int,a: list,rong: list):
@@ -71,14 +72,30 @@ class window:
           rong = array of colours of each and every rectangle'''
 
           self.canvas.delete('all')
-          width=(2*(780/N))//3
-          gap=(780/N)//3
+          width=(1570)/(3*N-1)
+          gap=width/2
+
           for i in range(N):
-               self.canvas.create_rectangle(0+i*width+i*gap,0,0+(i+1)*width+i*gap,a[i],fill=rong[i])
+               self.canvas.create_rectangle(7+i*width+i*gap,0,7+(i+1)*width+i*gap,a[i],fill=rong[i])
 
           self.root.update_idletasks()
 
-     
+     def slide_function(self):
+          self.N=int(self.arraysize.get())
+          self.data=np.linspace(5,400,self.N,dtype=np.uint16)
+          self.speed=1/self.timespan.get()
+          self.colours=['dodgerblue' for _ in range(self.N)]
+          self.shuffle()
+          
+  
+     def shuffle(self):
+          self.canvas.delete('all')
+          self.data=np.linspace(5,400,self.N,dtype=np.uint16)
+
+          np.random.shuffle(self.data)
+          self.display(self.N,self.data,self.colours)
+
+
      '''  bubble sort'''
      def bubble(self):
           if self.st['bubble'] is False:
@@ -93,11 +110,11 @@ class window:
                self.ms.config(style='info.TButton')
                self.ss.config(style='info.TButton')
                self.Is.config(style='info.TButton')
-               # print(self.st)
+              
           else:
                self.st['bubble'] = False
                self.bs.config(style='info.TButton')
-               # print(self.st)
+               
 
      '''  merge sort'''
      def merge(self):
@@ -113,11 +130,11 @@ class window:
                self.bs.config(style='info.TButton')
                self.ss.config(style='info.TButton')
                self.Is.config(style='info.TButton')
-               # print(self.st)
+               
           else:
                self.st['merge'] = False
                self.ms.config(style='info.TButton')
-               # print(self.st)
+               
 
      '''  quick sort'''
      def quick(self):
@@ -133,11 +150,11 @@ class window:
                self.bs.config(style='info.TButton')
                self.ss.config(style='info.TButton')
                self.Is.config(style='info.TButton')
-               # print(self.st)
+               
           else:
                self.st['quick'] = False
                self.qs.config(style='info.TButton')
-               # print(self.st)
+               
 
      '''  selection sort'''
      def selection(self):
@@ -153,11 +170,11 @@ class window:
                self.bs.config(style='info.TButton')
                self.ms.config(style='info.TButton')
                self.Is.config(style='info.TButton')
-               # print(self.st)
+               
           else:
                self.st['selection'] = False
                self.ss.config(style='info.TButton')
-               # print(self.st)
+               
 
      '''  insertion sort'''
      def insertion(self):
@@ -173,27 +190,20 @@ class window:
                self.bs.config(style='info.TButton')
                self.ss.config(style='info.TButton')
                self.ms.config(style='info.TButton')
-               # print(self.st)
+               
           else:
                self.st['insertion'] = False
                self.Is.config(style='info.TButton')
-               # print(self.st)
+ 
 
-  
-     def shuffle(self):
-          self.canvas.delete('all')
-          np.random.shuffle(self.data)
-          self.display(self.N,self.data,self.colours)
-          # print(self.data)
-
-     def start(self,T=0.2):
+     def start(self):
           if self.st['bubble'] is True:
                for i in range(self.N-1):
                     for j in range(self.N-1-i):
                          if self.data[j]>self.data[j+1]:
                               self.data[j],self.data[j+1]=self.data[j+1],self.data[j]
                               self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a>self.N-1-i else 'dodgerblue' for a in range(self.N)])
-                              time.sleep(T)
+                              time.sleep(self.speed)
                self.display(self.N,self.data,['green' for _ in range(self.N)])
 
           elif self.st['insertion'] is True:
@@ -204,7 +214,7 @@ class window:
                          self.data[i+1]=self.data[i]
                          i-=1
                          self.display(self.N,self.data,['purple' if a==j or a==j+1 else 'green' if a<=j else'dodgerblue' for a in range(self.N)])
-                         time.sleep(T)
+                         time.sleep(self.speed)
                     self.data[i+1]=key
                self.display(self.N,self.data,['green' for _ in range(self.N)])
 
@@ -213,9 +223,9 @@ class window:
                     min_index=i
                     # loop to find the minimum element and its index
                     for j in range(i+1,len(self.data)):
+                         self.display(self.N,self.data,['purple' if a==min_index else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
+                         time.sleep(self.speed)
                          if self.data[min_index]>self.data[j]:
-                              self.display(self.N,self.data,['purple' if a==j else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
-                              time.sleep(T)
                               min_index=j
                     if min_index!=i:
                          self.data[i], self.data[min_index]=self.data[min_index],self.data[i]
@@ -231,8 +241,9 @@ class window:
                self.display(self.N,self.data,['green' for _ in range(self.N)])
 
           else:
-               '''show messege box'''
-               pass
+               #show messege box
+               messagebox.showerror("Algorithm Visualizer", "You didn't select any sorting algorithm")
+               
 
      # -----------merge sort-------------------------------------
 
@@ -259,7 +270,7 @@ class window:
                          while i!=front:
                               a[i]=a[i-1]
                               self.display(self.N,self.data,['purple' if x==i else 'dodgerblue' for x in range(self.N)])
-                              time.sleep(0.1)
+                              time.sleep(self.speed)
                               i-=1
                          a[front]=temp
 
@@ -268,7 +279,7 @@ class window:
                          rj+=1
           
                self.display(self.N,self.data,['dodgerblue' for _ in range(self.N)])
-               time.sleep(0.2)
+               time.sleep(self.speed)
      
      #--------------------------------------------------quick sort---------------
 
