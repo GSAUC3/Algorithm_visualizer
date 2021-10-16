@@ -51,7 +51,7 @@ class window:
 
 
 
-          # some constants
+          
           self.speed=0.2
           self.N=10
           self.colours=['dodgerblue' for i in range(self.N)]
@@ -87,12 +87,11 @@ class window:
      def shuffle(self):
           self.canvas.delete('all')
           self.data=np.linspace(5,400,self.N,dtype=np.uint16)
-
           np.random.shuffle(self.data)
           self.display(self.N,self.data,self.colours)
 
 
-     '''  bubble sort'''
+     # ---------------button selection of sorting algos---------------------------
      def bubble(self):
           if self.st['bubble'] is False:
                self.st['bubble'] = True
@@ -112,7 +111,6 @@ class window:
                self.bs.config(style='info.TButton')
                
 
-     '''  merge sort'''
      def merge(self):
           if self.st['merge'] is False:
                self.st['merge'] = True
@@ -132,7 +130,6 @@ class window:
                self.ms.config(style='info.TButton')
                
 
-     '''  quick sort'''
      def quick(self):
           if self.st['quick'] is False:
                self.st['quick'] = True
@@ -152,7 +149,6 @@ class window:
                self.qs.config(style='info.TButton')
                
 
-     '''  selection sort'''
      def selection(self):
           if self.st['selection'] is False:
                self.st['selection'] = True
@@ -172,7 +168,6 @@ class window:
                self.ss.config(style='info.TButton')
                
 
-     '''  insertion sort'''
      def insertion(self):
           if self.st['insertion'] is False:
                self.st['insertion'] = True
@@ -191,7 +186,7 @@ class window:
                self.st['insertion'] = False
                self.Is.config(style='info.TButton')
  
-
+     # -----------------------------------------------------------
      def start(self):
           if self.st['bubble'] is True:
                for i in range(self.N-1):
@@ -228,7 +223,7 @@ class window:
                          self.display(self.N,self.data,['yellow' if a==min_index or a==i else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
                          time.sleep(self.speed)
                          if self.data[min_index]>self.data[j]:
-                              self.display(self.N,self.data,['red' if a==min_index or a==i else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
+                              self.display(self.N,self.data,['red' if a==min_index or a==j else 'green' if a<=i else 'dodgerblue' for a in range(self.N)])
                               time.sleep(self.speed)
                               min_index=j
                     if min_index!=i:
@@ -251,7 +246,7 @@ class window:
                messagebox.showerror("Algorithm Visualizer", "You didn't select any sorting algorithm")
                
 
-     # -----------merge sort-------------------------------------
+     # -----------merge sort algo-------------------------------------
 
      def mergesort(self,a,front,last):
           if front<last:
@@ -293,7 +288,7 @@ class window:
                self.display(self.N,self.data,['dodgerblue' for _ in range(self.N)])
                time.sleep(self.speed)
      
-     #--------------------------------------------------quick sort---------------
+     #-----------------------------quick sort algo---------------
 
      def partition(self,a,i,j):
           '''
@@ -330,9 +325,8 @@ class window:
                self.quicksort(a,x+1,j)
      #--------------------------------------------------
      
+if __name__ == '__main__':
+     win = Style(theme='darkly').master
+     obj = window(win, 'Sorting Algorithm Visualizer')
 
-
-win = Style(theme='darkly').master
-obj = window(win, 'Sorting Algorithm Visualizer')
-
-win.mainloop()
+     win.mainloop()
