@@ -1,10 +1,10 @@
 # Sorting Algorithm Visualizer
-***
+
 <a href="https://www.youtube.com/watch?v=4iM-eggaS2I">
 
 ![algovis](https://github.com/GSAUC3/RajarshiBanerjee/blob/master/images/algovis.gif)
 </a>
-
+***
 ### A gui application to visualize various sorting algorithms using pure python.
     
 How you can use it: 
