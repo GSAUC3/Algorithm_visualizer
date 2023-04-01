@@ -23,8 +23,8 @@ Or python3 based on the OS you are on.
 
 ### Screenshot
 
-<a href="https://www.youtube.com/watch?v=4iM-eggaS2I">Demo</a>
+<a href="https://www.youtube.com/watch?v=4iM-eggaS2I">
 
 ![algovis](https://github.com/GSAUC3/RajarshiBanerjee/blob/master/images/algovis.gif)
-
+</a>
 ***
