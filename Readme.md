@@ -3,7 +3,7 @@
 A gui application to visualize various sorting algorithms using pure python.
     
 How you can use it: 
-- Clone this repo in your local machine
+- Fork & clone this repo in your local machine
 - Run the following two commands and you are done. It's that easy.
 
 ```
