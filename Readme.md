@@ -1,15 +1,20 @@
 # Sorting Algorithm Visualizer
-
+***
 A gui application to visualize various sorting algorithms using pure python.
     
-### Language : Python 3
+How you can use it: 
+- Clone this repo in your local machine
+- Run the following two commands and you are done. It's that easy.
 
-### Libraries required
-- Tkinter
-- ttkbootstrap
-- numpy
-
-### Sorting algorithms
+```
+pip install -r requirements.txt
+```
+```
+python main.py
+```
+Or python3 based on the OS you are on. 
+***
+### Sorting algorithms Covered
 - Bubble Sort
 - Insertion Sort
 - Selection Sort
@@ -20,4 +25,6 @@ A gui application to visualize various sorting algorithms using pure python.
 
 
 
-![Screenshot 2021-10-16 021635](https://user-images.githubusercontent.com/55054089/137551474-512ffc14-90bc-4fdf-ab8c-835d930e3b64.png)
+![algovis](https://github.com/GSAUC3/RajarshiBanerjee/blob/master/images/algovis.gif)
+
+***
