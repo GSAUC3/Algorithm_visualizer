@@ -73,7 +73,8 @@ class window:
         gap=width/2
 
         for i in range(N):
-            self.canvas.create_rectangle(7+i*width+i*gap,0,7+(i+1)*width+i*gap,a[i],fill=rong[i])
+            self.canvas.create_rectangle(7+i*width+i*gap,0,
+                                         7+(i+1)*width+i*gap,a[i],fill=rong[i])
 
         self.root.update_idletasks()    
     

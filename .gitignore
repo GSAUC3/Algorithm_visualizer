@@ -1,6 +1,6 @@
 demo.py
-/test2.py
-/seed.py
+*.ipynb
 /Screenshot 2021-10-16 021635.png
 *.ipynb
 algo_visualizer.py
+test.py
