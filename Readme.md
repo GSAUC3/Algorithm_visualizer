@@ -1,9 +1,14 @@
 # Sorting Algorithm Visualizer
+
+<a href="https://www.youtube.com/watch?v=4iM-eggaS2I">
+
+![algovis](https://github.com/GSAUC3/RajarshiBanerjee/blob/master/images/algovis.gif)
+</a>
 ***
-A gui application to visualize various sorting algorithms using pure python.
+### A gui application to visualize various sorting algorithms using pure python.
     
 How you can use it: 
-- Clone this repo in your local machine
+- Fork & clone this repo in your local machine
 - Run the following two commands and you are done. It's that easy.
 
 ```
@@ -21,10 +26,5 @@ Or python3 based on the OS you are on.
 - Merge Sort
 - Quick Sort
 
-### Screenshot
-
-<a href="https://www.youtube.com/watch?v=4iM-eggaS2I">Demo</a>
-
-![algovis](https://github.com/GSAUC3/RajarshiBanerjee/blob/master/images/algovis.gif)
 
 ***
